@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView.Adapter mStoreAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private List<ResourceObject> resourceList = new ArrayList<>();
+    private List<storeObject> storeList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,10 +69,10 @@ public class MainActivity extends AppCompatActivity {
         mResourceRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mResourceRecyclerView.setAdapter(mResourceAdapter);
 
-        prepareResources();
+        prepare();
     }
 
-    private void prepareResources() {
+    private void prepare() {
         ResourceObject resource = new ResourceObject("Wood");
         resourceList.add(resource);
         resource = new ResourceObject("Stone");
@@ -82,6 +83,14 @@ public class MainActivity extends AppCompatActivity {
         resourceList.add(resource);
         resource = new ResourceObject("Brick");
         resourceList.add(resource);
+        storeObject store = new storeObject(this, "Road", new ResourceObject[] {resourceList.get(4), resourceList.get(0)}, new int[] {1, 1});
+        storeList.add(store);
+        store = new storeObject(this, "Settlement", new ResourceObject[] {resourceList.get(4), resourceList.get(0), resourceList.get(2), resourceList.get(3)}, new int[] {1, 1, 1, 1});
+        storeList.add(store);
+        store = new storeObject(this, "City", new ResourceObject[] {resourceList.get(2), resourceList.get(1)}, new int[] {2, 3});
+        storeList.add(store);
+        store = new storeObject(this, "Cevelopment Card", new ResourceObject[] {resourceList.get(3), resourceList.get(2), resourceList.get(1)}, new int[] {1, 1, 1});
+        storeList.add(store);
         mResourceAdapter.notifyDataSetChanged();
     }
 }
