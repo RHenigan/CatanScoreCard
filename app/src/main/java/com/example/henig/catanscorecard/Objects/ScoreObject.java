@@ -1,4 +1,4 @@
-package com.example.henig.catanscorecard;
+package com.example.henig.catanscorecard.Objects;
 
 /**
  * Created by henig on 10/19/2017.

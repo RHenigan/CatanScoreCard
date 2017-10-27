@@ -1,4 +1,4 @@
-package com.example.henig.catanscorecard;
+package com.example.henig.catanscorecard.Objects;
 
 /**
  * Created by henig on 10/19/2017.
@@ -9,7 +9,7 @@ public class ResourceObject {
     private String resourceName = "";
     private int resourceCount = 0;
 
-    ResourceObject(String name) {
+    public ResourceObject(String name) {
         this.resourceName = name;
     }
 

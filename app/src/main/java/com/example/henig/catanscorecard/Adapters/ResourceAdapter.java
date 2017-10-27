@@ -1,12 +1,14 @@
-package com.example.henig.catanscorecard;
+package com.example.henig.catanscorecard.Adapters;
 
 import android.support.v7.widget.RecyclerView;
-import android.test.suitebuilder.TestMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.henig.catanscorecard.R;
+import com.example.henig.catanscorecard.Objects.ResourceObject;
 
 import java.util.List;
 
