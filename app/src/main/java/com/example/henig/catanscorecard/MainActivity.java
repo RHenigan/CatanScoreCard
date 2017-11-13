@@ -9,9 +9,11 @@ import android.widget.TabHost;
 import android.widget.TextView;
 
 import com.example.henig.catanscorecard.Adapters.ResourceAdapter;
+import com.example.henig.catanscorecard.Adapters.ScoreAdapter;
 import com.example.henig.catanscorecard.Adapters.StoreAdapter;
 import com.example.henig.catanscorecard.Objects.ResourceObject;
 import com.example.henig.catanscorecard.Objects.ScoreObject;
+import com.example.henig.catanscorecard.Objects.ScoreTotalObject;
 import com.example.henig.catanscorecard.Objects.StoreObject;
 
 import java.util.ArrayList;
@@ -30,13 +32,14 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager mLayoutManager;
     private List<ResourceObject> resourceList = new ArrayList<>();
     private List<StoreObject> storeList = new ArrayList<>();
+    private List<ScoreObject> scoreList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ScoreObject score = new ScoreObject();
+        ScoreTotalObject score = new ScoreTotalObject();
         score.setVictoryPoints();
 
         scoreTextView = (TextView) findViewById(R.id.vpScoreTextView);
@@ -73,11 +76,18 @@ public class MainActivity extends AppCompatActivity {
         mResourceRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mResourceRecyclerView.setAdapter(mResourceAdapter);
 
-        mStoreAdapter = new StoreAdapter(storeList, mResourceAdapter);
+        mScoreAdapter = new ScoreAdapter(scoreList);
+        mLayoutManager = new LinearLayoutManager(getApplicationContext());
+        mScoreRecyclerView.setLayoutManager(mLayoutManager);
+        mScoreRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        mScoreRecyclerView.setAdapter(mScoreAdapter);
+
+        mStoreAdapter = new StoreAdapter(storeList, mResourceAdapter,(ScoreAdapter) mScoreAdapter);
         mLayoutManager = new LinearLayoutManager(getApplicationContext());
         mStoreRecyclerView.setLayoutManager(mLayoutManager);
         mStoreRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mStoreRecyclerView.setAdapter(mStoreAdapter);
+
 
         prepare();
     }
@@ -93,6 +103,16 @@ public class MainActivity extends AppCompatActivity {
         resourceList.add(resource);
         resource = new ResourceObject("Brick");
         resourceList.add(resource);
+        ScoreObject score = new ScoreObject("Road", 2, 0);
+        scoreList.add(score);
+        score = new ScoreObject("Settlement", 2, 2);
+        scoreList.add(score);
+        score = new ScoreObject("City", 0, 0);
+        scoreList.add(score);
+        score = new ScoreObject("Soldiers", 0, 0);
+        scoreList.add(score);
+        score = new ScoreObject("Dev Card", 0, 0);
+        scoreList.add(score);
         StoreObject store = new StoreObject(this, "Road", new ResourceObject[] {resourceList.get(4), resourceList.get(0)}, new int[] {1, 1});
         storeList.add(store);
         store = new StoreObject(this, "Settlement", new ResourceObject[] {resourceList.get(4), resourceList.get(0), resourceList.get(2), resourceList.get(3)}, new int[] {1, 1, 1, 1});
@@ -101,7 +121,9 @@ public class MainActivity extends AppCompatActivity {
         storeList.add(store);
         store = new StoreObject(this, "Development Card", new ResourceObject[] {resourceList.get(3), resourceList.get(2), resourceList.get(1)}, new int[] {1, 1, 1});
         storeList.add(store);
+
         mResourceAdapter.notifyDataSetChanged();
         mStoreAdapter.notifyDataSetChanged();
+        mScoreAdapter.notifyDataSetChanged();
     }
 }

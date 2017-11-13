@@ -20,6 +20,7 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.StoreViewHol
 
     private List<StoreObject> storeList;
     private ResourceAdapter rescAdapt;
+    private final ScoreAdapter scoreAdapt;
 
     public class StoreViewHolder extends RecyclerView.ViewHolder {
         public TextView name;
@@ -32,9 +33,10 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.StoreViewHol
         }
     }
 
-    public StoreAdapter(List<StoreObject> storeList, ResourceAdapter rescAdapt) {
+    public StoreAdapter(List<StoreObject> storeList, ResourceAdapter rescAdapt, ScoreAdapter scoreAdapt) {
         this.storeList = storeList;
         this.rescAdapt = rescAdapt;
+        this.scoreAdapt = scoreAdapt;
     }
 
     @Override
