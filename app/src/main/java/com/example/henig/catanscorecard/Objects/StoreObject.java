@@ -22,13 +22,14 @@ public class StoreObject {
         this.context = context;
     }
 
-    public void purchaseObj() {
+    public boolean purchaseObj() {
         int i = 0;
         boolean rescCheck = true;
         for (ResourceObject r : resc) {
             if(r.getResourceCount() < rescCount[i]) {
                 rescCheck = false;
                 Toast.makeText(this.context, "You Need More Resources!", Toast.LENGTH_SHORT).show();
+                return false;
             }
             i++;
         }
@@ -41,6 +42,7 @@ public class StoreObject {
                 i++;
             }
         }
+        return true;
     }
 
     public String getName() {

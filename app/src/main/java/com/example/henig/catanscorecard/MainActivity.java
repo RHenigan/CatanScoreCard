@@ -1,5 +1,6 @@
 package com.example.henig.catanscorecard;
 
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -33,11 +34,14 @@ public class MainActivity extends AppCompatActivity {
     private List<ResourceObject> resourceList = new ArrayList<>();
     private List<StoreObject> storeList = new ArrayList<>();
     private List<ScoreObject> scoreList = new ArrayList<>();
+    private Context mContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mContext = this.getApplicationContext();
 
         ScoreTotalObject score = new ScoreTotalObject();
         score.setVictoryPoints();
@@ -82,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
         mScoreRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mScoreRecyclerView.setAdapter(mScoreAdapter);
 
-        mStoreAdapter = new StoreAdapter(storeList, mResourceAdapter,(ScoreAdapter) mScoreAdapter);
+        mStoreAdapter = new StoreAdapter(storeList, mResourceAdapter,(ScoreAdapter) mScoreAdapter, mContext, findViewById(R.id.main_root));
         mLayoutManager = new LinearLayoutManager(getApplicationContext());
         mStoreRecyclerView.setLayoutManager(mLayoutManager);
         mStoreRecyclerView.setItemAnimator(new DefaultItemAnimator());

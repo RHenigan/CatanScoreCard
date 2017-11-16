@@ -1,12 +1,18 @@
 package com.example.henig.catanscorecard.Adapters;
 
+import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.example.henig.catanscorecard.MainActivity;
 import com.example.henig.catanscorecard.Objects.StoreObject;
 import com.example.henig.catanscorecard.R;
 
@@ -21,6 +27,8 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.StoreViewHol
     private List<StoreObject> storeList;
     private ResourceAdapter rescAdapt;
     private final ScoreAdapter scoreAdapt;
+    private Context mContext;
+    private View mParent;
 
     public class StoreViewHolder extends RecyclerView.ViewHolder {
         public TextView name;
@@ -33,10 +41,12 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.StoreViewHol
         }
     }
 
-    public StoreAdapter(List<StoreObject> storeList, ResourceAdapter rescAdapt, ScoreAdapter scoreAdapt) {
+    public StoreAdapter(List<StoreObject> storeList, ResourceAdapter rescAdapt, ScoreAdapter scoreAdapt, Context context, View view) {
         this.storeList = storeList;
         this.rescAdapt = rescAdapt;
         this.scoreAdapt = scoreAdapt;
+        this.mContext = context;
+        this.mParent = view;
     }
 
     @Override
@@ -52,8 +62,57 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.StoreViewHol
         holder.buy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                store.purchaseObj();
+                boolean check = store.purchaseObj();
                 notifyDataSetChanged();
+
+                if (store.getName() == "Development Card") {
+                    if (check) {
+                        LayoutInflater inflater = LayoutInflater.from(mContext);
+                        View popUpView = inflater.inflate(R.layout.card_bought_popup, null);
+
+                        final PopupWindow mPopUpWindow = new PopupWindow(popUpView,
+                                ViewGroup.LayoutParams.WRAP_CONTENT,
+                                ViewGroup.LayoutParams.WRAP_CONTENT);
+
+                        popUpView.setBackgroundColor(Color.WHITE);
+
+                        Button knightButton = (Button) popUpView.findViewById(R.id.knightButton);
+                        Button vpButton = (Button) popUpView.findViewById(R.id.vpButton);
+                        Button roadButton = (Button) popUpView.findViewById(R.id.roadButton);
+                        Button yearButton = (Button) popUpView.findViewById(R.id.yearsButton);
+
+                        knightButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                mPopUpWindow.dismiss();
+                            }
+                        });
+
+                        vpButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                mPopUpWindow.dismiss();
+                            }
+                        });
+
+                        roadButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                mPopUpWindow.dismiss();
+                            }
+                        });
+
+                        yearButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                mPopUpWindow.dismiss();
+                            }
+                        });
+
+                        mPopUpWindow.showAtLocation(mParent, Gravity.CENTER, 0, 0);
+                    }
+                }
+
                 rescAdapt.notifyDataSetChanged();
             }
         });
